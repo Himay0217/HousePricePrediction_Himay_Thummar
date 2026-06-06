@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bengaluru Home Price Estimator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="header__badge">Bengaluru · ML estimate</div>
+      <h1 class="header__title">Home Price <em>Estimator</em></h1>
+      <p class="header__subtitle">
+        Enter your property details to get an estimated market price based on location, size, and layout.
+      </p>
+    </header>
+
+    <main class="layout">
+      <section class="card card--form" aria-labelledby="form-heading">
+        <h2 id="form-heading" class="card__title">Property details</h2>
+
+        <div id="server-status" class="status" role="status" hidden></div>
+
+        <form id="predict-form" class="form" novalidate>
+          <div class="field">
+            <label for="location">Location</label>
+            <div class="combobox" id="location-combobox">
+              <input
+                type="text"
+                id="location"
+                name="location"
+                autocomplete="off"
+                placeholder="Search neighbourhoods…"
+                required
+                aria-autocomplete="list"
+                aria-controls="location-list"
+                aria-expanded="false"
+              />
+              <ul id="location-list" class="combobox__list" role="listbox" hidden></ul>
+            </div>
+            <span class="field__hint" id="location-hint">Loading locations…</span>
+          </div>
+
+          <div class="field">
+            <label for="total_sqft">Total square feet</label>
+            <input
+              type="number"
+              id="total_sqft"
+              name="total_sqft"
+              min="100"
+              max="50000"
+              step="50"
+              placeholder="e.g. 1200"
+              required
+            />
+          </div>
+
+          <div class="form__row">
+            <div class="field">
+              <label for="bhk">BHK</label>
+              <input
+                type="number"
+                id="bhk"
+                name="bhk"
+                min="1"
+                max="10"
+                step="1"
+                placeholder="3"
+                required
+              />
+            </div>
+            <div class="field">
+              <label for="bath">Bathrooms</label>
+              <input
+                type="number"
+                id="bath"
+                name="bath"
+                min="1"
+                max="10"
+                step="1"
+                placeholder="2"
+                required
+              />
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn--primary" id="submit-btn">
+            <span class="btn__label">Estimate price</span>
+            <span class="btn__spinner" hidden aria-hidden="true"></span>
+          </button>
+        </form>
+      </section>
+
+      <section class="card card--result" aria-labelledby="result-heading" aria-live="polite">
+        <h2 id="result-heading" class="card__title">Estimated value</h2>
+
+        <div id="result-empty" class="result result--empty">
+          <div class="result__icon" aria-hidden="true">₹ In Thousands</div>
+          <p>Fill in the form and submit to see your estimated home price.</p>
+        </div>
+
+        <div id="result-value" class="result result--value" hidden>
+          <p class="result__label">Estimated price</p>
+          <p class="result__amount" id="price-display">—</p>
+          <dl class="result__summary" id="result-summary"></dl>
+        </div>
+
+        <div id="result-error" class="result result--error" hidden>
+          <p class="result__error-title">Could not estimate</p>
+          <p id="error-message"></p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/app.js" type="module"></script>
+</body>
+</html>
